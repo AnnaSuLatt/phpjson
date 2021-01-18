@@ -1,9 +1,16 @@
 {
     "2": {
         "name": "Ma Ma",
-        "email": "mama@gmail.ocm",
+        "email": "mama@gmail.com",
         "gender": "Female",
         "address": "Yangon , Ahlon",
-        "profile": "photo\/images.png"
+        "profile": "photo\/bug.png"
+    },
+    "3": {
+        "name": "Mg Mg1",
+        "email": "mgmg@gmail.com",
+        "gender": "Male",
+        "address": "Yangon, Kamaywat",
+        "profile": "photo\/84e84792bd2f7489443c4bdbc20e182c.png"
     }
 }

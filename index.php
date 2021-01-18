@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 </head>
 <body>
+	<!-- Add Student form -->
 	<div class="container" id="addStudentdiv">
 		<div class="row mt-5">
 			<div class="col-12 text-center">
@@ -79,6 +80,87 @@
 		</div>
 	</div>
 
+	<!-- Edit Student Form -->
+
+	<div class="container" id="editStudentdiv">
+		<div class="row mt-5">
+			<div class="col-12 text-center">
+				<h1 class="display-4"> Edit Student </h1>
+			</div>
+		</div>
+
+		<div class="row mt-5">
+			<div class="col align-self-center">
+				<form action="updatestudent.php" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="id" class="edit_id">
+					<div class="form-group row">
+						<label for="profile" class="col-sm-2 col-form-label"> Profile </label>
+					    <div class="col-sm-10">
+					    	<input type="file"  id="profile" name="profile">
+					    	<br>
+					    	<img src="" class="edit_img" width="200" height="100">
+					    	<input type="hidden" name="old_photo" class="old_photo">
+					    </div>
+					</div>
+
+					<div class="form-group row">
+						<label for="name" class="col-sm-2 col-form-label"> Name </label>
+					    <div class="col-sm-10">
+					    	<input type="text" class="form-control edit_name" id="name" placeholder="Enter Name" name="name">
+					    </div>
+					</div>
+
+					<div class="form-group row">
+						<label for="name" class="col-sm-2 col-form-label"> Email </label>
+					    <div class="col-sm-10">
+					    	<input type="email" class="form-control edit_email" id="name" placeholder="Enter Email" name="email">
+					    </div>
+					</div>
+
+					<fieldset class="form-group">
+					    <div class="row">
+					    	<legend class="col-form-label col-sm-2 pt-0"> Gender </legend>
+					      
+					      	<div class="col-sm-10">
+					        
+					        	<div class="form-check">
+					          		<input class="form-check-input edit_male" type="radio" name="gender" id="male" value="Male" checked>
+					          		<label class="form-check-label" for="male">
+					            		Male
+					          		</label>
+					        	</div>
+					        
+					        	<div class="form-check">
+					          		<input class="form-check-input edit_female" type="radio" name="gender" id="female" value="Female">
+					          		<label class="form-check-label" for="female">
+					            		Female
+					          		</label>
+					        	</div>
+					        
+					      </div>
+					    </div>
+					</fieldset>
+
+					<div class="form-group row">
+						<label for="address" class="col-sm-2 col-form-label"> Address </label>
+					    <div class="col-sm-10">
+					    	<textarea class="form-control edit_address" rows="5" name="address"></textarea>
+					    </div>
+					</div>
+
+					<div class="form-group row">
+					    <div class="col-sm-10">
+					   		<button type="submit" class="btn btn-primary">
+					   			Update
+					   		</button>
+					    </div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -102,6 +184,8 @@
 
 	$(document).ready(function(){
 		getData();
+		$("#addStudentdiv").show();
+		$("#editStudentdiv").hide();
 		function getData(){
 			$.get('student.json',function(response){
 				console.log(typeof(response));
@@ -117,7 +201,7 @@
 						<td>${v.email}</td>
 						<td>
 							<button class="btn btn-success detail" data-name="${v.name}" data-gender="${v.gender}" data-email="${v.email}" data-address="${v.address}" data-profile="${v.profile}">Detail</button>
-							<button class="btn btn-warning">Edit</button>
+							<button class="btn btn-warning edit" data-id=${i} data-name="${v.name}" data-gender="${v.gender}" data-email="${v.email}" data-address="${v.address}" data-profile="${v.profile}">Edit</button>
 							<button class="btn btn-danger delete" data-id=${i}>Delete</button>
 						<td>
 
@@ -157,6 +241,36 @@
 
 			
 		})
+
+
+		$("tbody").on('click','.edit',function(){
+			$("#addStudentdiv").hide();
+			$("#editStudentdiv").show();
+			var id=$(this).data('id');
+			var name=$(this).data('name');
+			var email=$(this).data('email');
+			var gender=$(this).data('gender');
+			var address=$(this).data('address');
+			var profile=$(this).data('profile');
+
+			$(".edit_id").val(id);
+			$(".edit_name").val(name);
+			$(".edit_email").val(email);
+			$(".edit_address").val(address);
+			$(".old_photo").val(profile);
+			$(".edit_img").attr("src",profile);
+
+			if (gender=="Male") {
+				$(".edit_male").attr('checked','checked');
+			}else{
+				$(".edit_female").attr('checked','checked');
+			}
+
+
+		})
+
+
+
 
 
 
